@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FoodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FoodTypeID" Type="Int32" Nullable="false" />
+    <Property Name="FoodColourID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="FoodColour" Relationship="Self.FK__Food__FoodColour__15502E78" FromRole="Food" ToRole="FoodColour" />
+    <NavigationProperty Name="FoodType" Relationship="Self.FK__Food__FoodTypeID__145C0A3F" FromRole="Food" ToRole="FoodType" />
+  </EntityType>
+  <EntityType Name="FoodColour">
+    <Key>
+      <PropertyRef Name="FoodColourID" />
+    </Key>
+    <Property Name="FoodColourID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodColourDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Foods" Relationship="Self.FK__Food__FoodColour__15502E78" FromRole="FoodColour" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="FoodType">
+    <Key>
+      <PropertyRef Name="FoodTypeID" />
+    </Key>
+    <Property Name="FoodTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FoodTypeDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Foods" Relationship="Self.FK__Food__FoodTypeID__145C0A3F" FromRole="FoodType" ToRole="Food" />
+  </EntityType>
+  <Association Name="FK__Food__FoodColour__15502E78">
+    <End Role="FoodColour" Type="Self.FoodColour" Multiplicity="1" />
+    <End Role="Food" Type="Self.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodColour">
+        <PropertyRef Name="FoodColourID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="FoodColourID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Food__FoodTypeID__145C0A3F">
+    <End Role="FoodType" Type="Self.FoodType" Multiplicity="1" />
+    <End Role="Food" Type="Self.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodType">
+        <PropertyRef Name="FoodTypeID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="FoodTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FoodEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Foods" EntityType="Self.Food" />
+    <EntitySet Name="FoodColours" EntityType="Self.FoodColour" />
+    <EntitySet Name="FoodTypes" EntityType="Self.FoodType" />
+    <AssociationSet Name="FK__Food__FoodColour__15502E78" Association="Self.FK__Food__FoodColour__15502E78">
+      <End Role="FoodColour" EntitySet="FoodColours" />
+      <End Role="Food" EntitySet="Foods" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Food__FoodTypeID__145C0A3F" Association="Self.FK__Food__FoodTypeID__145C0A3F">
+      <End Role="FoodType" EntitySet="FoodTypes" />
+      <End Role="Food" EntitySet="Foods" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

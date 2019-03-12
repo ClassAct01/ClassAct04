@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FoodModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FoodDescription" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FoodTypeID" Type="int" Nullable="false" />
+    <Property Name="FoodColourID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoodColour">
+    <Key>
+      <PropertyRef Name="FoodColourID" />
+    </Key>
+    <Property Name="FoodColourID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FoodColourDescription" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FoodType">
+    <Key>
+      <PropertyRef Name="FoodTypeID" />
+    </Key>
+    <Property Name="FoodTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FoodTypeDescription" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Food__FoodColour__15502E78">
+    <End Role="FoodColour" Type="Self.FoodColour" Multiplicity="1" />
+    <End Role="Food" Type="Self.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodColour">
+        <PropertyRef Name="FoodColourID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="FoodColourID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Food__FoodTypeID__145C0A3F">
+    <End Role="FoodType" Type="Self.FoodType" Multiplicity="1" />
+    <End Role="Food" Type="Self.Food" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FoodType">
+        <PropertyRef Name="FoodTypeID" />
+      </Principal>
+      <Dependent Role="Food">
+        <PropertyRef Name="FoodTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FoodModelStoreContainer">
+    <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoodColour" EntityType="Self.FoodColour" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FoodType" EntityType="Self.FoodType" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Food__FoodColour__15502E78" Association="Self.FK__Food__FoodColour__15502E78">
+      <End Role="FoodColour" EntitySet="FoodColour" />
+      <End Role="Food" EntitySet="Food" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Food__FoodTypeID__145C0A3F" Association="Self.FK__Food__FoodTypeID__145C0A3F">
+      <End Role="FoodType" EntitySet="FoodType" />
+      <End Role="Food" EntitySet="Food" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
